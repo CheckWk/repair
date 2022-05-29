@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.work.mapper.SysMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.work.pojo.entity.SysMenu">
+        <id column="id" property="id" />
+        <result column="menu_name" property="menuName" />
+        <result column="path" property="path" />
+        <result column="component" property="component" />
+        <result column="visible" property="visible" />
+        <result column="status" property="status" />
+        <result column="perms" property="perms" />
+        <result column="icon" property="icon" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="del_flag" property="delFlag" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, menu_name, path, component, visible, `status`, perms, icon, create_by, create_time, update_by, update_time, del_flag, remark
+    </sql>
+    <select id="selectMenus" resultType="com.work.pojo.entity.SysMenu">
+        SELECT distinct m.id,m.* from sys_user u
+                            RIGHT JOIN sys_user_role ur on u.id=ur.user_id
+                            RIGHT JOIN sys_role r on ur.role_id=r.id
+                            RIGHT JOIN sys_role_menu rm on r.id=rm.role_id
+                            RIGHT JOIN sys_menu m on rm.menu_id=m.id
+        WHERE u.id=#{userId}
+    </select>
+    <select id="selectPermsByUserId" resultType="java.lang.String">
+        SELECT
+            DISTINCT m.`perms`
+        FROM
+            sys_user_role ur
+                LEFT JOIN `sys_role` r ON ur.`role_id` = r.`id`
+                LEFT JOIN `sys_role_menu` rm ON ur.`role_id` = rm.`role_id`
+                LEFT JOIN `sys_menu` m ON m.`id` = rm.`menu_id`
+        WHERE
+            user_id = #{userId}
+    </select>
+
+</mapper>

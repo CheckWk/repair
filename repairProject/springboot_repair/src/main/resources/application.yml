@@ -1,0 +1,7 @@
+#选择使用dev开发环境
+spring:
+  profiles:
+    active: dev
+
+#server:
+#  port: 8081

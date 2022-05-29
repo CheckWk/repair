@@ -1,0 +1,30 @@
+spring:
+  #数据源信息，注意修改数据库名和账号密码
+  datasource:
+    url: jdbc:mysql://localhost:3306/springboot_repair
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+  #redis地址和端口
+  redis:
+    host: localhost
+    port: 6379
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+#mybatis-plus配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 设置注册用户默认密码
+person:
+  password: 1234
+
+# ===== 自定义swagger配置,是否开启 ===== #
+swagger:
+  show: true
+
